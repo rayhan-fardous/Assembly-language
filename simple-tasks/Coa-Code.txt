@@ -1,0 +1,225 @@
+two number add
+...................................................
+.model small
+.stack 100h
+.data
+a db 'Input first digit $'
+b db 'Input second digit $'
+c db 'Result $'
+.code
+main proc
+mov ax,@data
+mov ds,ax
+;putting ax value in ds register
+
+mov ah,9
+lea dx,a
+int 21h
+
+;input 1st digit
+mov ah,1
+int 21h
+mov bl,al
+
+mov ah,9
+lea dx,b
+int 21h
+
+;input 2nd digit
+mov ah,1
+int 21h
+mov bh,al
+
+
+mov ah,9
+lea dx,c
+int 21h
+
+add bl,bh ;bl=bl+bh
+sub bl,48
+mov ah,2
+mov dl,bl
+int 21h
+
+
+exit:
+mov ah,4ch
+int 21h
+main endp
+end main
+////////////////////////////////////////////////////////////////////////////////////////////////
+swap ....
+////////////
+.model small
+.stack 100h
+
+.code
+main proc
+;cs Es
+
+mov ah,1
+int 21h
+mov bl,al
+int 21h
+mov cl,al
+
+mov ah,2    ; output new line
+mov dl,10   ;10 is new line
+int 21h
+mov dl,13   ; 13 is creat
+int 21h
+
+mov ah,2
+mov dl,cl
+int 21h
+
+mov dl,bl
+int 21h
+
+mov ah,2
+mov dl,10
+int 21h
+mov dl,13
+int 21h
+
+exit:
+mov ah,4ch
+int 21h
+main endp
+end main
+////////////////////////////////////////////////////////////////////////////////////////
+loop 
+...........................
+.MODEL SMALL
+ .STACK 100H
+
+ .DATA
+    PROMPT  DB  'The counting from 0 to 5 is : $'
+
+ .CODE
+   MAIN PROC
+     MOV AX, @DATA                ; initialize DS 
+     MOV DS, AX
+
+     LEA DX, PROMPT               ; load and print PROMPT 
+     MOV AH, 9
+     INT 21H
+
+     MOV CX, 5                   ; initialize CX
+
+     MOV AH, 2                    ; set output function  
+     MOV DL, 49                  ; set DL with 0
+
+     @LOOP: 
+                           ; loop label
+       INT 21H                    ; print character
+
+       INC DL
+       dec CX                     ; increment DL to next ASCII characterDEC CX 
+       
+         
+       
+       
+                           ; decrement CX
+     JNZ @LOOP                    ; jump to label @LOOP if CX is 0
+
+     MOV AH, 4CH                  ; return control to DOS
+     INT 21H
+   MAIN ENDP
+ END MAIN
+
+
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+.model small
+.stack 100h
+.data
+.code
+
+main proc
+    
+       mov ax,@data
+       mov ds,ax
+    
+       xor cx,cx    ;mov cx,0
+    
+       mov ah,1
+       int 21h
+    
+    while:
+     
+       cmp al,13
+     
+       je end_while
+     
+       push ax
+       inc cx
+       int 21h
+     
+       jmp while
+     
+    end_while:
+       
+       mov ah,2
+       mov dl,13
+       int 21h
+       mov dl,10
+       int 21h
+      
+       jcxz exit    ;ck-0
+      
+    top:
+        
+       pop dx
+       int 21h
+       loop top
+        
+    
+    exit:     
+       mov ah,4ch
+       int 21h
+       main endp
+end main
+////////////////////////////////////////////////////////////////////////////////////////////////////
+.MODEL SMALL
+ .STACK 100H
+
+ .DATA
+    PROMPT_1  DB  'Enter the Lower Case Letter : $'
+    PROMPT_2  DB  0DH,0AH,'The Upper Case Letter is : $'
+
+ .CODE
+   MAIN PROC
+     MOV AX, @DATA                ; initialize DS
+     MOV DS, AX
+
+     LEA DX, PROMPT_1             ; load and print PROMPT_1
+     MOV AH, 9
+     INT 21H
+
+     MOV AH, 1                    ; read a letter
+     INT 21H
+
+     MOV BL, AL                   ; save the letter in BL 
+
+     LEA DX, PROMPT_2             ; load and print PROMPT_2
+     MOV AH, 9
+     INT 21H
+
+     AND BL, 0DFH                 ; convert a lower case letter to upper
+                                  ; case letter
+
+     MOV AH, 2                    ; print the Lower case letter
+     MOV DL, BL
+     INT 21H
+
+     MOV AH, 4CH                  ; return control to DOS
+     INT 21H
+   MAIN ENDP 
+ END MAIN
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+https://www.youtube.com/watch?v=4qA8c6eH5VE
+
+
